@@ -27,13 +27,13 @@ ui <- fluidPage(
                                type = "image",
                                href = "https://image.pngaaa.com/393/402393-middle.png"),
              "Dominancia y Prestigio"),
-  tags$h3(HTML("<center>Escala de autoevaluación de Dominancia y Prestigio</center>")),
+  tags$h2(HTML("<center>Escala de autoevaluación de Dominancia y Prestigio</center>")),
   p(HTML("<center> 
       <b><i>EvoCo</i>: Laboratorio de Evolución y Comportamiento Humano</b><br>
-      Universidad El Bosque · 2024
+      <center><a href='https://investigaciones.unbosque.edu.co/codec'><img src='Logo_EvoCo.png'' width='100'></a></center><br>
+      Universidad El Bosque · 2024<br>
       Creado por
       <a style=color:#ff5555;  href='https://jdleongomez.info/es/'>Juan David Leongómez</a><br></center>")),
-  HTML("<center><a href='https://investigaciones.unbosque.edu.co/codec'><img src='Logo_EvoCo.png'' width='100'></a></center>"),
   hr(),
   fluidRow(
     column(3,
@@ -103,8 +103,8 @@ ui <- fluidPage(
     ),
     column(3,
            p(HTML("<center>Indica en qué medida cada afirmación te describe escribiendo el
-                  número correspondiente de la escala siguiente en el espacio proporcionado.</center><br>"),
-             HTML("<center><img src='escala.png'' width='300'></center>")),
+                  número correspondiente de la escala siguiente en el espacio proporcionado.</center><br>
+                  <center><img src='escala.png'' width='300'></center>")),
            numericInput(inputId = "i11",
                         label = "Los demás saben que es mejor dejar que me salga con la mía",
                         min = 1,
@@ -147,6 +147,11 @@ ui <- fluidPage(
                         max = 7,
                         value = NA,
                         step = 1),
+           p(HTML("<font size='1'>
+                  Cheng, J. T., Tracy, J. L., & Henrich, J. (2010). Pride, personality, 
+                  and the evolutionary foundations of human social status. 
+                  <i>Evolution and Human Behavior, 31<i/>(5), 334–347. 
+                  <a style=color:#ff5555;  href='https://doi.org/10.1016/j.evolhumbehav.2010.02.004'>https://doi.org/10.1016/j.evolhumbehav.2010.02.004</a></font>")),
            hr(),
            tags$h4("Demográficos (opcionales)"),
            numericInput(inputId = "edad",
