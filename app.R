@@ -27,13 +27,13 @@ ui <- fluidPage(
                                type = "image",
                                href = "https://image.pngaaa.com/393/402393-middle.png"),
              "Dominancia y Prestigio"),
-  HTML("<center><a href='https://investigaciones.unbosque.edu.co/codec'><img src='Logo_EvoCo.png'' width='100'></a></center>"),
   tags$h3(HTML("<center>Escala de autoevaluación de Dominancia y Prestigio</center>")),
-  p(HTML("<center>Creado por
-      <a style=color:#ff5555;  href='https://jdleongomez.info/es/'>Juan David Leongómez</a><br> 
+  p(HTML("<center> 
       <b><i>EvoCo</i>: Laboratorio de Evolución y Comportamiento Humano</b><br>
-      Universidad El Bosque
-      · 2024</center>")),
+      Universidad El Bosque · 2024
+      Creado por
+      <a style=color:#ff5555;  href='https://jdleongomez.info/es/'>Juan David Leongómez</a><br></center>")),
+  HTML("<center><a href='https://investigaciones.unbosque.edu.co/codec'><img src='Logo_EvoCo.png'' width='100'></a></center>"),
   hr(),
   fluidRow(
     column(3,
