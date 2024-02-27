@@ -153,7 +153,7 @@ ui <- fluidPage(
                         label = "Edad",
                         min = 1,
                         max = 99,
-                        value = NA,
+                        value = 18,
                         step = 1),
            selectInput(inputId = "gender", label = "Género",
                        choices = c("Mujer", 
@@ -164,11 +164,11 @@ ui <- fluidPage(
                                    "Otra"))
     ),
     column(4,
-           nextGenShinyApps::submitButton("runSim", text = "¿Todo listo? ¡Calcula tus puntajes!", 
+           nextGenShinyApps::submitButton("addData", text = "¿Todo listo? ¡Calcula tus puntajes!", 
                                           icon("paper-plane"), bg.type = "danger"),
            tags$h1("Tus resultados"),
-           tags$h3("Este es tu nivel de Dominancia y Prestigio, en relación con el de las demás personas que han respondido"),
-           plotOutput("DomPresPlot") %>%
+           tags$h5("Este es tu nivel de Dominancia y Prestigio, en relación con el de las demás personas que han respondido"),
+           plotOutput("DomPresPlot") |> 
              withSpinner(color = "#ff5555")
     )
   )
@@ -178,10 +178,18 @@ server <- function(input, output, session) {
   
   # Simulate population
   
+  datRAW <- read_csv("Data/Dominancia_Prestigio.csv") |> 
+    mutate(Date = as.character(Date))
+  
+  pnum <- reactive({
+    thispart <- max(datRAW$num)+1
+    return(thispart)
+  })
+  
   dat <- reactive({
-    datos <- read_csv("Dominancia_Prestigio.csv") |> 
-      add_row(num = max(num)+1, 
-              Date = format(Sys.time(), "%Y-%m-%d %X"),
+    datos <- datRAW |> 
+      add_row(num = pnum(), 
+              Date = as.character(format(Sys.time(), "%Y-%m-%d %X")),
               i01 = input$i01,
               i02 = input$i02,
               i03 = input$i03,
@@ -200,8 +208,10 @@ server <- function(input, output, session) {
               i16 = input$i16,
               i17 = input$i17,
               gen = input$gender,
-              age = nput$edad)
-    write_csv(datos, "Dominancia_Prestigio.csv")
+              age = input$edad) |> 
+      rowwise() |> 
+      mutate(Dominancia = sum(i03, i05, i07, i09, (8-i10), i11, (8-i12), i16)/8,
+             Prestigio = sum(i01, (8-i02), i04, (8-i06), i08, i13, i14, i15, (8-i17))/9)
     return(datos)
   })
 
@@ -217,7 +227,7 @@ server <- function(input, output, session) {
       group_by(Variable) |> 
       mutate(Percentil = ntile(Puntaje, 100)) |> 
       ungroup() |> 
-      filter(num == max(num, na.rm=TRUE))
+      filter(num == max(num, na.rm = TRUE))
     return(dat3)
   })
   
@@ -229,7 +239,7 @@ server <- function(input, output, session) {
       geom_jitter(alpha = 0.1, width = 0.1) +
       geom_point(data = dpLongMax(), aes(color = Variable), size = 5, color = "black") +
       geom_label_repel(data = dpLongMax(), 
-                       aes(label = paste0("Tú: ", Percentil, "%"), 
+                       aes(label = paste0("Tú: ", round(Puntaje,2), "(percentil: ", Percentil, "%)"), 
                            fill = Variable, color = Variable), 
                        color = "black",
                        point.padding = NA,
@@ -238,6 +248,20 @@ server <- function(input, output, session) {
       scale_y_continuous(breaks = scales::pretty_breaks()) +
       labs(x = "") +
       theme(legend.position = "none")
+  })
+  
+  saveData <- function(data) {
+    data <- dat()
+    # Write the file to the local system
+    write.csv(
+      x = data,
+      file = file.path("Data", "Dominancia_Prestigio.csv"), 
+      append = FALSE
+    )
+  }
+  
+  observeEvent(input$submit, {
+    saveData()
   })
 }
 
