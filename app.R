@@ -20,7 +20,7 @@ library(ggrepel)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-  theme = shinytheme("slate"),
+  theme = shinytheme("cyborg"),
   
   # Application title
   titlePanel(title = tags$link(rel = "icon",
@@ -37,84 +37,85 @@ ui <- fluidPage(
   hr(),
   fluidRow(
     column(8,
+           style='margin-bottom:30px;border:1px solid; padding: 20px;',
            tags$h4(HTML("<center>Indica en qué medida cada afirmación te describe escribiendo el
                   número correspondiente de la escala siguiente en el espacio proporcionado.</center><br>"),
-             HTML("<center><img src='escala.png'' width='500'></center>")),
-           column(6,
+                  HTML("<center><img src='escala.png'' width='500'></center>")),
+           column(4,
                   sliderInput(inputId = "i01",
                               label = "Los miembros de mi grupo de compañeros me respetan y me admiran",
-                       min = 1,
-                       max = 7,
-                       value = 1,               
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i02",
-                       label = "Los miembros de mi grupo de compañeros NO quieren ser como yo",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i03",
-                       label = "Me gusta tener control sobre los demás",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i04",
-                       label = "Los demás siempre esperan que tenga éxito",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i05",
-                       label = "A menudo intento salirme con la mía sin importarme lo que quieran los demás",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i06",
-                       label = "Los demás NO valoran mi opinión",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i07",
-                       label = "Estoy dispuesto a utilizar tácticas agresivas para salirme con la mía",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i08",
-                       label = "Mis conocidos me tienen en alta estima",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i09",
-                       label = "Intento controlar a los demás en lugar de permitir que me controlen",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto")
+                              min = 1,
+                              max = 7,
+                              value = 1,               
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i02",
+                              label = "Los miembros de mi grupo de compañeros NO quieren ser como yo",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i03",
+                              label = "Me gusta tener control sobre los demás",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i04",
+                              label = "Los demás siempre esperan que tenga éxito",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i05",
+                              label = "A menudo intento salirme con la mía sin importarme lo que quieran los demás",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i06",
+                              label = "Los demás NO valoran mi opinión",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto")
            ),
-           column(6,
+           column(4,
+                  sliderInput(inputId = "i07",
+                              label = "Estoy dispuesto a utilizar tácticas agresivas para salirme con la mía",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i08",
+                              label = "Mis conocidos me tienen en alta estima",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i09",
+                              label = "Intento controlar a los demás en lugar de permitir que me controlen",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
                   sliderInput(inputId = "i10",
                               label = "NO tengo una personalidad enérgica ni dominante",
                               min = 1,
@@ -124,69 +125,71 @@ ui <- fluidPage(
                               step = 1,
                               width = "auto"),
                   sliderInput(inputId = "i11",
-                       label = "Los demás saben que es mejor dejar que me salga con la mía",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i12",
-                       label = "NO disfruto teniendo autoridad sobre otras personas",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i13",
-                       label = "Los demás reconocen mis talentos y habilidades únicos",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i14",
-                       label = "Los demás me consideran un experto en algunos temas",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i15",
-                       label = "Los demás me piden consejo sobre diversos temas",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i16",
-                       label = "Algunas personas me tienen miedo",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           sliderInput(inputId = "i17",
-                       label = "A otros NO les gusta estar conmigo",
-                       min = 1,
-                       max = 7,
-                       value = 1,
-                       ticks = TRUE,
-                       step = 1,
-                       width = "auto"),
-           hr(),
-           p(HTML("<font size='1'>
+                              label = "Los demás saben que es mejor dejar que me salga con la mía",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i12",
+                              label = "NO disfruto teniendo autoridad sobre otras personas",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto")
+           ),
+           column(4,
+                  sliderInput(inputId = "i13",
+                              label = "Los demás reconocen mis talentos y habilidades únicos",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i14",
+                              label = "Los demás me consideran un experto en algunos temas",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i15",
+                              label = "Los demás me piden consejo sobre diversos temas",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i16",
+                              label = "Algunas personas me tienen miedo",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  sliderInput(inputId = "i17",
+                              label = "A otros NO les gusta estar conmigo",
+                              min = 1,
+                              max = 7,
+                              value = 1,
+                              ticks = TRUE,
+                              step = 1,
+                              width = "auto"),
+                  hr(),
+                  p(HTML("<font size='1'>
                   Cheng, J. T., Tracy, J. L., & Henrich, J. (2010). Pride, personality, 
                   and the evolutionary foundations of human social status. 
                   <i>Evolution and Human Behavior, 31<i/>(5), 334–347. 
                   <a style=color:#ff5555;  href='https://doi.org/10.1016/j.evolhumbehav.2010.02.004'>https://doi.org/10.1016/j.evolhumbehav.2010.02.004</a></font>")
-             )
-           ),
+                  )
+           )
     ),
     column(4,
            tags$h4("Demográficos (opcionales)"),
@@ -204,8 +207,8 @@ ui <- fluidPage(
                                    "No binario",
                                    "Otra")),
            hr(),
-           nextGenShinyApps::submitButton("addData", text = "¿Todo listo? ¡Calcula tus puntajes!", 
-                                          icon("paper-plane"), bg.type = "danger"),
+           actionButton("add_graph", label = "¡Calcula tus puntajes!", 
+                        icon("paper-plane")),
            tags$h1("Tus resultados"),
            tags$h5("Este es tu nivel de Dominancia y Prestigio, en relación con el de las demás personas que han respondido"),
            plotOutput("DomPresPlot") |> 
@@ -216,20 +219,24 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   
-  # Simulate population
+ # datosFULL <- reactive({
+ #   datRAW <- read_csv("Data/Dominancia_Prestigio.csv") |> 
+ #     mutate(Date = as.character(Date))
+ #   return(datRAW)
+ # })
   
-  datRAW <- read_csv("Data/Dominancia_Prestigio.csv") |> 
-    mutate(Date = as.character(Date))
+  datosFULL <- read_csv("Data/Dominancia_Prestigio.csv") |> 
+         mutate(Date = as.character(Date))
   
   pnum <- reactive({
-    thispart <- max(datRAW$num)+1
+    thispart <- max(datosFULL$num)+1
     return(thispart)
   })
   
   dat <- reactive({
-    datos <- datRAW |> 
+    datos <- datosFULL |> 
       add_row(num = pnum(), 
-              Date = as.character(format(Sys.time(), "%Y-%m-%d %X")),
+              Date = as.character(format(Sys.time(), "%d/%m/%Y %H:%M")),
               i01 = input$i01,
               i02 = input$i02,
               i03 = input$i03,
@@ -254,7 +261,7 @@ server <- function(input, output, session) {
              Prestigio = sum(i01, (8-i02), i04, (8-i06), i08, i13, i14, i15, (8-i17))/9)
     return(datos)
   })
-
+  
   dpLong <- reactive({
     dat2 <- dat() |> 
       select(num, Dominancia, Prestigio) |> 
@@ -272,12 +279,12 @@ server <- function(input, output, session) {
   })
   
   # Plot 
-  output$DomPresPlot <- renderPlot({
-    ggplot(dpLong(), aes(y = Puntaje, x = Variable)) +
+  observeEvent(input$add_graph,{
+    plot1 <- ggplot(dpLong(), aes(y = Puntaje, x = Variable)) +
       geom_violin(aes(fill = Variable, color = Variable), alpha = 0.1) +
       geom_boxplot(aes(color = Variable), width = 0.1) +
       geom_jitter(alpha = 0.1, width = 0.1) +
-      geom_point(data = dpLongMax(), aes(color = Variable), size = 5, color = "black") +
+      geom_point(data = dpLongMax(), aes(color = Variable), size = 5) +
       geom_label_repel(data = dpLongMax(), 
                        aes(label = paste0("Tú: ", round(Puntaje,2), "(percentil: ", Percentil, "%)"), 
                            fill = Variable, color = Variable), 
@@ -287,20 +294,25 @@ server <- function(input, output, session) {
       ylim(c(1,7)) +
       scale_y_continuous(breaks = scales::pretty_breaks()) +
       labs(x = "") +
-      theme(legend.position = "none")
+      theme(legend.position = "none") +
+      facet_wrap(~Variable, scales = "free_x")
+    
+    output$DomPresPlot <- renderPlot({
+      input$add_graph
+      plot1
+    })
   })
   
-  saveData <- function(data) {
-    data <- dat()
-    # Write the file to the local system
-    write.csv(
-      x = data,
-      file = file.path("Data", "Dominancia_Prestigio.csv"), 
-      append = FALSE
-    )
-  }
-  
-  observeEvent(input$submit, {
+  observeEvent(input$add_graph, {
+    saveData <- function(data){
+      data <- dat()
+      # Write the file to the local system
+      write.csv(
+        x = data,
+        file = file.path("Data", "Dominancia_Prestigio.csv"),
+        row.names = FALSE,
+        append = FALSE)
+    }
     saveData()
   })
 }
