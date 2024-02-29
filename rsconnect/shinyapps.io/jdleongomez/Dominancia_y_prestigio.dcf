@@ -5,7 +5,7 @@ account: jdleongomez
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11348025
-bundleId: 8309696
+bundleId: 8310603
 url: https://jdleongomez.shinyapps.io/Dominancia_y_prestigio/
 version: 1
 asMultiple: FALSE

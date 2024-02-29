@@ -289,11 +289,11 @@ server <- function(input, output, session) {
       geom_jitter(aes(color = Variable), alpha = 0.15) +
       geom_point(data = dpLongMax(), aes(color = Variable), size = 5) +
       geom_label_repel(data = dpLongMax(), 
-                       aes(label = paste0("Tú: ", round(Puntaje,2)), 
+                       aes(label = "Tú", 
                            fill = Variable, color = Variable), 
                        size = 8,
                        position = position_nudge_repel(x = c(0.3, -0.3),
-                                                       y = 0),
+                                                       y = c(0.3, -0.3)),
                        arrow = arrow(length = unit(0.05, "npc"), type = "closed"),
                        color = "black",
                        point.padding = 1,
