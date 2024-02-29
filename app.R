@@ -35,8 +35,8 @@ ui <- fluidPage(
   fluidRow(
     column(8,
            style='margin-bottom:30px;border:1px solid; padding: 20px;',
-           tags$h4(HTML("<center>Indica en qué medida cada afirmación te describe escribiendo el
-                  número correspondiente de la escala siguiente en el espacio proporcionado.</center><br>"),
+           tags$h4(HTML("<center>Indica en qué medida cada afirmación te describe seleccionando el
+                        número correspondiente de la siguiente escala:</center><br>"),
                   HTML("<center><img src='escala.png'' width='500'></center>")),
            column(4,
                   sliderInput(inputId = "i01",
@@ -208,7 +208,7 @@ ui <- fluidPage(
            tags$h1("Tus resultados"),
            br(),
            actionButton("add_graph", 
-                        label = "¿Respondiste todas las preguntas? ¡Haz clic acá y calcula tus puntajes!", 
+                        label = "¿Respondiste todas las preguntas? ¡Haz clic acá para ver tus resultados!", 
                         icon("play")),
            htmlOutput("powText1"),
            plotOutput("DomPresPlot") |> 
