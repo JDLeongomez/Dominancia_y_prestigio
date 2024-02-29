@@ -9,10 +9,8 @@
 
 Sys.setlocale("LC_ALL", "es_CO.UTF-8")
 library(shiny)
-library(thematic)
 library(shinythemes)
 library(shinycssloaders)
-library(shinyWidgets)
 library(readr)
 library(tidyverse)
 library(scales)
@@ -27,13 +25,12 @@ ui <- fluidPage(
                                type = "image",
                                href = "https://image.pngaaa.com/393/402393-middle.png"),
              "Dominancia y Prestigio"),
-  tags$h2(HTML("<center>Escala de autoevaluación de Dominancia y Prestigio</center>")),
-  p(HTML("<center> 
-      <b><i>EvoCo</i>: Laboratorio de Evolución y Comportamiento Humano</b><br>
-      <center><a href='https://investigaciones.unbosque.edu.co/codec'><img src='Logo_EvoCo.png'' width='100'></a></center><br>
-      Universidad El Bosque · 2024<br>
-      Creado por
-      <a style=color:#ff5555;  href='https://jdleongomez.info/es/'>Juan David Leongómez</a><br></center>")),
+  tags$h2(HTML("<center>Escala de autoevaluación de <b style=color:#428bca;>Dominancia</b> y <b style=color:#ff8080;>Prestigio</b></center>")),
+  p(HTML("<center>Aplicación creada por
+      <a style=color:#ff8080;  href='https://jdleongomez.info/es/'>Juan David Leongómez</a>, PhD, MSc<br>
+      <a style=color:#428bca;  href='https://www.psicologia.unbosque.edu.co/lach'><i><b>EvoCo</i></b>: Laboratorio de Evolución y Comportamiento Humano</a><br>
+      Facultad de Psicología · Universidad El Bosque · 2024<br>
+      </center>")),
   hr(),
   fluidRow(
     column(8,
@@ -93,7 +90,7 @@ ui <- fluidPage(
            ),
            column(4,
                   sliderInput(inputId = "i07",
-                              label = "Estoy dispuesto a utilizar tácticas agresivas para salirme con la mía",
+                              label = "Estoy dispuesto/dispuesta a utilizar tácticas agresivas para salirme con la mía",
                               min = 1,
                               max = 7,
                               value = 1,
@@ -101,7 +98,7 @@ ui <- fluidPage(
                               step = 1,
                               width = "auto"),
                   sliderInput(inputId = "i08",
-                              label = "Mis conocidos me tienen en alta estima",
+                              label = "Mis conocidos/conocidas me tienen en alta estima",
                               min = 1,
                               max = 7,
                               value = 1,
@@ -143,7 +140,7 @@ ui <- fluidPage(
            ),
            column(4,
                   sliderInput(inputId = "i13",
-                              label = "Los demás reconocen mis talentos y habilidades únicos",
+                              label = "Los demás reconocen mis habilidades y talentos únicos",
                               min = 1,
                               max = 7,
                               value = 1,
@@ -175,7 +172,7 @@ ui <- fluidPage(
                               step = 1,
                               width = "auto"),
                   sliderInput(inputId = "i17",
-                              label = "A otros NO les gusta estar conmigo",
+                              label = "A otras personas NO les gusta estar conmigo",
                               min = 1,
                               max = 7,
                               value = 1,
@@ -183,11 +180,12 @@ ui <- fluidPage(
                               step = 1,
                               width = "auto"),
                   hr(),
-                  p(HTML("<font size='1'>
-                  Cheng, J. T., Tracy, J. L., & Henrich, J. (2010). Pride, personality, 
-                  and the evolutionary foundations of human social status. 
-                  <i>Evolution and Human Behavior, 31<i/>(5), 334–347. 
-                  <a style=color:#ff5555;  href='https://doi.org/10.1016/j.evolhumbehav.2010.02.004'>https://doi.org/10.1016/j.evolhumbehav.2010.02.004</a></font>")
+                  p(HTML("<font size='2'>
+                  <b>Adaptado de:</b><br>
+                  Cheng, J. T., Tracy, J. L., & Henrich, J. (2010). 
+                  Pride, personality, and the evolutionary foundations of human social status. 
+                  <i>Evolution and Human Behavior, 31</i>(5), 334–347. 
+                  <a style=color:#428bca;  href='https://doi.org/10.1016/j.evolhumbehav.2010.02.004'>https://doi.org/10.1016/j.evolhumbehav.2010.02.004</a></font>")
                   )
            )
     ),
@@ -207,26 +205,31 @@ ui <- fluidPage(
                                    "No binario",
                                    "Otra")),
            hr(),
-           actionButton("add_graph", label = "¡Calcula tus puntajes!", 
-                        icon("paper-plane")),
            tags$h1("Tus resultados"),
-           tags$h5("Este es tu nivel de Dominancia y Prestigio, en relación con el de las demás personas que han respondido"),
+           br(),
+           actionButton("add_graph", 
+                        label = "¿Respondiste todas las preguntas? ¡Haz clic acá y calcula tus puntajes!", 
+                        icon("play")),
+           htmlOutput("powText1"),
            plotOutput("DomPresPlot") |> 
-             withSpinner(color = "#ff5555")
+             withSpinner(color = "#ff8080",
+                         image = "Logo_EvoCo.png",
+                         image.width = 300, image.height = 300),
+           htmlOutput("powText2")
     )
   )
 )
 
 server <- function(input, output, session) {
   
- # datosFULL <- reactive({
- #   datRAW <- read_csv("Data/Dominancia_Prestigio.csv") |> 
- #     mutate(Date = as.character(Date))
- #   return(datRAW)
- # })
+  # datosFULL <- reactive({
+  #   datRAW <- read_csv("Data/Dominancia_Prestigio.csv") |> 
+  #     mutate(Date = as.character(Date))
+  #   return(datRAW)
+  # })
   
   datosFULL <- read_csv("Data/Dominancia_Prestigio.csv") |> 
-         mutate(Date = as.character(Date))
+    mutate(Date = as.character(Date))
   
   pnum <- reactive({
     thispart <- max(datosFULL$num)+1
@@ -283,23 +286,57 @@ server <- function(input, output, session) {
     plot1 <- ggplot(dpLong(), aes(y = Puntaje, x = Variable)) +
       geom_violin(aes(fill = Variable, color = Variable), alpha = 0.1) +
       geom_boxplot(aes(color = Variable), width = 0.1) +
-      geom_jitter(alpha = 0.1, width = 0.1) +
+      geom_jitter(aes(color = Variable), alpha = 0.15) +
       geom_point(data = dpLongMax(), aes(color = Variable), size = 5) +
       geom_label_repel(data = dpLongMax(), 
-                       aes(label = paste0("Tú: ", round(Puntaje,2), "(percentil: ", Percentil, "%)"), 
+                       aes(label = paste0("Tú: ", round(Puntaje,2)), 
                            fill = Variable, color = Variable), 
+                       size = 8,
+                       position = position_nudge_repel(x = c(0.3, -0.3),
+                                                       y = 0),
+                       arrow = arrow(length = unit(0.05, "npc"), type = "closed"),
                        color = "black",
-                       point.padding = NA,
+                       point.padding = 1,
                        box.padding = 0.5) +
       ylim(c(1,7)) +
+      scale_fill_manual(values = c("#428bca", "#ff8080")) +
+      scale_color_manual(values = c("#428bca", "#ff8080")) +
       scale_y_continuous(breaks = scales::pretty_breaks()) +
       labs(x = "") +
-      theme(legend.position = "none") +
-      facet_wrap(~Variable, scales = "free_x")
+      theme(legend.position = "none",
+            axis.text.x = element_blank(),
+            axis.ticks.x = element_blank(),
+            text = element_text(size = 16)) +
+      facet_wrap(~Variable, scales = "free_x") +
+      theme(strip.text = element_text(
+        size = 20))
     
     output$DomPresPlot <- renderPlot({
       input$add_graph
       plot1
+    })
+  })
+  
+  observeEvent(input$add_graph, {
+    explText1 <- paste("<font size='5'><b style=color:#ffffff;>Puntajes:</b> <b style=color:#428bca;>Dominancia = ", round(dpLongMax()$Puntaje[1], 2),
+                       "</b> <b style=color:#ffffff;>|</b> <b style=color:#ff8080;>Prestigio = ", round(dpLongMax()$Puntaje[2], 2), "</b>.")
+    output$powText1 <- renderText({
+      input$add_graph
+      explText1
+    })
+  })
+  
+  observeEvent(input$add_graph, {
+    explText2 <- paste("<font size='3'><a style=color:#ffffff;>Esto te ubica en el</a><b style=color:#428bca;>", dpLongMax()$Percentil[1], "%</b>
+                       <a style=color:#ffffff;>y</a><b style=color:#ff8080;>", dpLongMax()$Percentil[2], "%</b><a style=color:#ffffff;>, 
+                       respectivamente, con respecto a las otras<b>",
+                      pnum()-1, "</b>personas que han respondido. Tú te sientes más dominante que el", 
+                      dpLongMax()$Percentil[1], "% de las personas (o menos dominante que el", 
+                      100-dpLongMax()$Percentil[1], "%), y más prestigioso o prestigiosa que el", dpLongMax()$Percentil[2], "% 
+                      (menos prestigioso o prestigiosa que el", 100-dpLongMax()$Percentil[1], "%).</a>")
+    output$powText2 <- renderText({
+      input$add_graph
+      explText2
     })
   })
   
@@ -316,9 +353,6 @@ server <- function(input, output, session) {
     saveData()
   })
 }
-
-# Same theme for plots
-thematic_shiny()
 
 # Run the application 
 shinyApp(ui = ui, server = server)
