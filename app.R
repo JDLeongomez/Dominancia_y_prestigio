@@ -37,7 +37,7 @@ ui <- fluidPage(
            style='margin-bottom:30px;border:1px solid; padding: 20px;',
            tags$h4(HTML("<center>Indica en qué medida cada afirmación te describe seleccionando el
                         número correspondiente de la siguiente escala:</center><br>"),
-                  HTML("<center><img src='escala.png'' width='500'></center>")),
+                  HTML("<center><img src='escala.png'' width='80%'></center>")),
            column(4,
                   sliderInput(inputId = "i01",
                               label = "Los miembros de mi grupo de compañeros me respetan y me admiran",
